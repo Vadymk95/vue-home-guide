@@ -1,13 +1,14 @@
 <template>
   <div class="app">
-    <post-form />
-    <post-list :posts="posts" />
+    <post-form @create="createPost"/>
+    <post-list :posts="posts" @remove="removePost" />
   </div>
 </template>
 
 <script lang="ts">
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
+import { IPost } from '@/models/Post';
 export default {
   components: {
     PostForm,
@@ -20,11 +21,16 @@ export default {
         { id: 2, title: 'Vue', body: 'Vue post description' },
         { id: 3, title: 'Angular', body: 'Angular post description' },
         { id: 4, title: 'Ember', body: 'Ember post description' },
-      ],
+      ] as IPost[],
     };
   },
   methods: {
-    addPost() {},
+    createPost(post: IPost) {
+      this.posts.push(post);
+    },
+    removePost(id: number) {
+      this.posts = this.posts.filter((post: IPost) => post.id !== id);
+    }
   },
 };
 </script>
@@ -40,4 +46,5 @@ export default {
 .app {
   padding: 20px;
 }
+
 </style>
