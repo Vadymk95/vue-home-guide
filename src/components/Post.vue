@@ -10,7 +10,7 @@
         <span>{{ post.body }}</span>
       </div>
     </div>
-    <custom-button @click="removePost" variant="secondary">Remove Post</custom-button>
+    <custom-button @click="$emit('remove', post.id)" variant="secondary">Remove Post</custom-button>
   </div>
 </template>
 
@@ -22,14 +22,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    removePost() {
-      this.$emit('remove', this.post.id);
-    }
   }
 };
 </script>
