@@ -1,6 +1,11 @@
 <template>
   <div class="app">
-    <post-form @create="createPost"/>
+    <custom-modal v-model:isShow="modalVisible">
+      <post-form @create="createPost" />
+    </custom-modal>
+    <div class="btn-group">
+      <custom-button @click="showModal" variant="primary">Create a post</custom-button>
+    </div>
     <post-list :posts="posts" @remove="removePost" />
   </div>
 </template>
@@ -9,10 +14,12 @@
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from '@/models/Post';
+import CustomButton from '@/components/UI/CustomButton.vue';
 export default {
   components: {
     PostForm,
     PostList,
+    CustomButton,
   },
   data() {
     return {
@@ -22,14 +29,19 @@ export default {
         { id: 3, title: 'Angular', body: 'Angular post description' },
         { id: 4, title: 'Ember', body: 'Ember post description' },
       ] as IPost[],
+      modalVisible: false,
     };
   },
   methods: {
     createPost(post: IPost) {
       this.posts.push(post);
+      this.modalVisible = false;
     },
     removePost(id: number) {
       this.posts = this.posts.filter((post: IPost) => post.id !== id);
+    },
+    showModal() {
+      this.modalVisible = true;
     }
   },
 };
@@ -47,4 +59,9 @@ export default {
   padding: 20px;
 }
 
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
 </style>

@@ -51,13 +51,14 @@ export default {
 .form__wrap {
   margin-bottom: 20px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   gap: 20px;
   border: none;
 }
 
 .form__title {
+  text-align: center;
   margin-bottom: 10px;
 }
 </style>
