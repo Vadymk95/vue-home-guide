@@ -1,10 +1,18 @@
 <template>
   <div class="app">
+    <header>
+      <hgroup class="titles-group">
+        <h1 class="title-top">An interesting project about posts</h1>
+        <h4 class="title-bottom">created by Vue3</h4>
+      </hgroup>
+    </header>
     <custom-modal v-model:isShow="modalVisible">
       <post-form @create="createPost" />
     </custom-modal>
     <div class="btn-group">
-      <custom-button @click="showModal" variant="primary">Create a post</custom-button>
+      <custom-button @click="showModal" variant="primary"
+        >Create a post</custom-button
+      >
     </div>
     <post-list :posts="posts" @remove="removePost" />
   </div>
@@ -42,7 +50,7 @@ export default {
     },
     showModal() {
       this.modalVisible = true;
-    }
+    },
   },
 };
 </script>
@@ -57,6 +65,20 @@ export default {
 
 .app {
   padding: 20px;
+}
+
+.titles-group {
+  color: #707070;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.title-top {
+  text-transform: uppercase;
+}
+
+.title-bottom {
+  color: #303030;
 }
 
 .btn-group {
