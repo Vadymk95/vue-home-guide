@@ -10,12 +10,12 @@
       <post-form @create="createPost" />
     </custom-modal>
     <div class="btn-group">
-      <custom-button variant="primary" @click="fetchUsers">Download posts</custom-button>
-      <custom-button variant="primary" @click="showModal"
-        >Create a post</custom-button
-      >
+      <custom-button variant="primary" @click="showModal">
+        Create a post
+      </custom-button>
     </div>
-    <post-list :posts="posts" @remove="removePost" />
+    <post-list :posts="posts" @remove="removePost" v-if="!isLoading" />
+    <custom-loader v-else />
   </div>
 </template>
 
@@ -23,18 +23,17 @@
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from '@/models/Post';
-import CustomButton from '@/components/UI/CustomButton.vue';
 import axios from 'axios';
 export default {
   components: {
     PostForm,
     PostList,
-    CustomButton,
-  },
+},
   data() {
     return {
       posts: [] as IPost[],
       modalVisible: false,
+      isLoading: false,
     };
   },
   methods: {
@@ -48,16 +47,22 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
-    async fetchUsers() {
+    async fetchPosts() {
       try {
+        this.isLoading = true;
         const response = await axios(
           'https://jsonplaceholder.typicode.com/posts?_limit=10'
         );
-        this.posts = response.data;
+        this.posts = [...this.posts, ...response.data];
       } catch (error) {
         alert(error);
+      } finally {
+        this.isLoading = false;
       }
     },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
@@ -95,7 +100,7 @@ export default {
 .btn-group {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 20px;
 }
 </style>
