@@ -10,7 +10,8 @@
       <post-form @create="createPost" />
     </custom-modal>
     <div class="btn-group">
-      <custom-button @click="showModal" variant="primary"
+      <custom-button variant="primary" @click="fetchUsers">Download posts</custom-button>
+      <custom-button variant="primary" @click="showModal"
         >Create a post</custom-button
       >
     </div>
@@ -23,6 +24,7 @@ import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from '@/models/Post';
 import CustomButton from '@/components/UI/CustomButton.vue';
+import axios from 'axios';
 export default {
   components: {
     PostForm,
@@ -31,12 +33,7 @@ export default {
   },
   data() {
     return {
-      posts: [
-        { id: 1, title: 'JavaScript', body: 'JS post description' },
-        { id: 2, title: 'Vue', body: 'Vue post description' },
-        { id: 3, title: 'Angular', body: 'Angular post description' },
-        { id: 4, title: 'Ember', body: 'Ember post description' },
-      ] as IPost[],
+      posts: [] as IPost[],
       modalVisible: false,
     };
   },
@@ -51,6 +48,16 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
+    async fetchUsers() {
+      try {
+        const response = await axios(
+          'https://jsonplaceholder.typicode.com/posts?_limit=10'
+        );
+        this.posts = response.data;
+      } catch (error) {
+        alert(error);
+      }
+    },
   },
 };
 </script>
@@ -64,7 +71,11 @@ export default {
 }
 
 .app {
+  background-color: #eaeaea;
+  height: 100vh;
   padding: 20px;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .titles-group {
@@ -84,6 +95,7 @@ export default {
 .btn-group {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 </style>

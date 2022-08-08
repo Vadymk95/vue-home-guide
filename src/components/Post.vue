@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div>
+    <div class="post__body">
       <div class="post__block">
         <strong class="post__title">Title:</strong>
         <span>{{ post.title }}</span>
@@ -30,13 +30,18 @@ export default {
 .post {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 20px;
   margin-bottom: 20px;
   color: #fff;
   border-radius: 8px;
   border: 2px solid lightskyblue;
   background-color: darkcyan;
+}
+
+.post__body {
+  margin-bottom: 20px;
 }
 
 .post:hover {
@@ -50,7 +55,7 @@ export default {
 }
 
 .post__block {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .post__block:last-child {
@@ -58,7 +63,9 @@ export default {
 }
 
 .post__title {
+  text-decoration: underline;
   margin-right: 10px;
   letter-spacing: 1px;
+  font-size: 20px;
 }
 </style>
