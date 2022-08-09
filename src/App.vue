@@ -13,8 +13,9 @@
       <custom-button variant="primary" @click="showModal">
         Create a post
       </custom-button>
+      <custom-select v-model="selectedSort" :options="sortOptions" />
     </div>
-    <post-list :posts="posts" @remove="removePost" v-if="!isLoading" />
+    <post-list :posts="sortedPosts" @remove="removePost" v-if="!isLoading" />
     <custom-loader v-else />
   </div>
 </template>
@@ -34,6 +35,11 @@ export default {
       posts: [] as IPost[],
       modalVisible: false,
       isLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        { value: 'title', name: 'by Name' },
+        { value: 'body', name: 'by Content' },
+      ],
     };
   },
   methods: {
@@ -63,6 +69,19 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort(
+        (
+          post1: { title: string; body: string },
+          post2: { title: string; body: string }
+        ) =>
+          post1[this.selectedSort as keyof typeof post1]?.localeCompare(
+            post2[this.selectedSort as keyof typeof post2]
+          )
+      );
+    },
   },
 };
 </script>
@@ -108,7 +127,7 @@ body {
 .btn-group {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 </style>

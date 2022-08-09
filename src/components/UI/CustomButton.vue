@@ -36,7 +36,7 @@ export default {
 }
 
 .primary:hover,
-secondary:hover {
+.secondary:hover {
   box-shadow: 0 0 5px #707070;
   transition: all 0.3s;
 }
