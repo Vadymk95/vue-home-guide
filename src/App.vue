@@ -6,6 +6,11 @@
         <h4 class="title-bottom">created by Vue3</h4>
       </hgroup>
     </header>
+    <custom-input
+      class="search-input"
+      placeholder="Search..."
+      v-model="searchQuery"
+    />
     <custom-modal v-model:isShow="modalVisible">
       <post-form @create="createPost" />
     </custom-modal>
@@ -15,7 +20,7 @@
       </custom-button>
       <custom-select v-model="selectedSort" :options="sortOptions" />
     </div>
-    <post-list :posts="sortedPosts" @remove="removePost" v-if="!isLoading" />
+    <post-list :posts="searchedPosts" @remove="removePost" v-if="!isLoading" />
     <custom-loader v-else />
   </div>
 </template>
@@ -40,6 +45,7 @@ export default {
         { value: 'title', name: 'by Name' },
         { value: 'body', name: 'by Content' },
       ],
+      searchQuery: '',
     };
   },
   methods: {
@@ -80,6 +86,11 @@ export default {
           post1[this.selectedSort as keyof typeof post1]?.localeCompare(
             post2[this.selectedSort as keyof typeof post2]
           )
+      );
+    },
+    searchedPosts() {
+      return this.sortedPosts.filter((post: IPost) =>
+        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
   },
@@ -129,5 +140,10 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>
