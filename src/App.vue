@@ -16,8 +16,9 @@
       <custom-select v-model="selectedSort" :options="sortOptions" />
     </div>
     <post-list :posts="searchedPosts" @remove="removePost" v-if="!isLoading" />
-    <custom-loader v-else />
-    <pagination :pages="totalPages" :pageNumber="pageNumber" @changePage="changePage"/>
+    <!-- <custom-loader v-else /> -->
+    <!-- <pagination :pages="totalPages" :pageNumber="pageNumber" @changePage="changePage"/> -->
+    <div ref="observer" class="observer"></div>
   </div>
 </template>
 
@@ -26,15 +27,15 @@ import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from '@/models/Post';
 import axios from 'axios';
-import Pagination from '@/components/Pagination.vue';
+// import Pagination from '@/components/Pagination.vue';
 import PostHeader from './components/PostHeader.vue';
 export default {
   components: {
     PostForm,
     PostList,
-    Pagination,
-    PostHeader
-},
+    // Pagination,
+    PostHeader,
+  },
   data() {
     return {
       posts: [] as IPost[],
@@ -66,14 +67,17 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios(
-          'https://jsonplaceholder.typicode.com/posts', {
+          'https://jsonplaceholder.typicode.com/posts',
+          {
             params: {
               _page: this.pageNumber,
-              _limit: this.limit
-            }
+              _limit: this.limit,
+            },
           }
         );
-        this.totalPages = Math.ceil(<any>response.headers['x-total-count'] / this.limit)
+        this.totalPages = Math.ceil(
+          <any>response.headers['x-total-count'] / this.limit
+        );
         this.posts = response.data;
       } catch (error) {
         alert(error);
@@ -81,12 +85,44 @@ export default {
         this.isLoading = false;
       }
     },
-    changePage (pageNumber: number) {
-      this.pageNumber = pageNumber;
-    }
+    async loadMorePosts() {
+      try {
+        this.pageNumber += 1;
+        const response = await axios(
+          'https://jsonplaceholder.typicode.com/posts',
+          {
+            params: {
+              _page: this.pageNumber,
+              _limit: this.limit,
+            },
+          }
+        );
+        this.totalPages = Math.ceil(
+          <any>response.headers['x-total-count'] / this.limit
+        );
+        this.posts = [...this.posts, ...response.data];
+      } catch (error) {
+        alert(error);
+      }
+    },
+    // changePage (pageNumber: number) {
+    //   this.pageNumber = pageNumber;
+    // }
   },
   mounted() {
     this.fetchPosts();
+
+    const options = {
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+    const callback: IntersectionObserverCallback = (entries) => {
+      if (entries[0].isIntersecting && this.pageNumber < this.totalPages) {
+        this.loadMorePosts();
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
@@ -107,10 +143,10 @@ export default {
     },
   },
   watch: {
-    pageNumber() {
-      this.fetchPosts();
-    }
-  }
+    // pageNumber() {
+    //   this.fetchPosts();
+    // }
+  },
 };
 </script>
 
