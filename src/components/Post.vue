@@ -1,6 +1,7 @@
 <template>
   <div class="post">
     <div class="post__body">
+      <h2 class="post__header">Post {{post.id}}</h2>
       <div class="post__block">
         <strong class="post__title">Title:</strong>
         <span>{{ post.title }}</span>
@@ -52,6 +53,10 @@ export default {
 
 .post:last-child {
   margin-bottom: 0;
+}
+
+.post__header {
+  margin-bottom: 20px;
 }
 
 .post__block {

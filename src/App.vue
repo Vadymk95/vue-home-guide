@@ -1,11 +1,6 @@
 <template>
   <div class="app">
-    <header>
-      <hgroup class="titles-group">
-        <h1 class="title-top">An interesting project about posts</h1>
-        <h4 class="title-bottom">created by Vue3</h4>
-      </hgroup>
-    </header>
+    <post-header />
     <custom-input
       class="search-input"
       placeholder="Search..."
@@ -22,6 +17,7 @@
     </div>
     <post-list :posts="searchedPosts" @remove="removePost" v-if="!isLoading" />
     <custom-loader v-else />
+    <pagination :pages="totalPages" :pageNumber="pageNumber" @changePage="changePage"/>
   </div>
 </template>
 
@@ -30,11 +26,15 @@ import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from '@/models/Post';
 import axios from 'axios';
+import Pagination from '@/components/Pagination.vue';
+import PostHeader from './components/PostHeader.vue';
 export default {
   components: {
     PostForm,
     PostList,
-  },
+    Pagination,
+    PostHeader
+},
   data() {
     return {
       posts: [] as IPost[],
@@ -46,6 +46,9 @@ export default {
         { value: 'body', name: 'by Content' },
       ],
       searchQuery: '',
+      pageNumber: 1,
+      limit: 10,
+      totalPages: 0,
     };
   },
   methods: {
@@ -63,15 +66,24 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios(
-          'https://jsonplaceholder.typicode.com/posts?_limit=10'
+          'https://jsonplaceholder.typicode.com/posts', {
+            params: {
+              _page: this.pageNumber,
+              _limit: this.limit
+            }
+          }
         );
-        this.posts = [...this.posts, ...response.data];
+        this.totalPages = Math.ceil(<any>response.headers['x-total-count'] / this.limit)
+        this.posts = response.data;
       } catch (error) {
         alert(error);
       } finally {
         this.isLoading = false;
       }
     },
+    changePage (pageNumber: number) {
+      this.pageNumber = pageNumber;
+    }
   },
   mounted() {
     this.fetchPosts();
@@ -94,6 +106,11 @@ export default {
       );
     },
   },
+  watch: {
+    pageNumber() {
+      this.fetchPosts();
+    }
+  }
 };
 </script>
 
@@ -119,20 +136,6 @@ body {
   padding: 20px;
   max-width: 1024px;
   margin: 0 auto;
-}
-
-.titles-group {
-  color: #707070;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.title-top {
-  text-transform: uppercase;
-}
-
-.title-bottom {
-  color: #303030;
 }
 
 .btn-group {
