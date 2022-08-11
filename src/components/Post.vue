@@ -11,7 +11,19 @@
         <span>{{ post.body }}</span>
       </div>
     </div>
-    <custom-button @click="$emit('remove', post.id)" variant="secondary">Remove Post</custom-button>
+    <custom-button
+      class="post__open"
+      @click="$router.push(`/posts/${post.id}`)"
+      variant="secondary"
+    >
+      Open
+    </custom-button>
+    <custom-button
+      @click="$emit('remove', post.id)"
+      variant="secondary"
+    >
+      Remove Post
+    </custom-button>
   </div>
 </template>
 
@@ -72,5 +84,9 @@ export default {
   margin-right: 10px;
   letter-spacing: 1px;
   font-size: 20px;
+}
+
+.post__open {
+  margin-bottom: 10px;
 }
 </style>
