@@ -8,6 +8,7 @@
           type="text"
           placeholder="Add post title"
           v-model="post.title"
+          v-focus
         />
       </div>
       <div>

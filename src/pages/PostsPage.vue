@@ -3,6 +3,7 @@
     class="search-input"
     placeholder="Search..."
     v-model="searchQuery"
+    v-focus
   />
   <custom-modal v-model:isShow="modalVisible">
     <post-form @create="createPost" />
@@ -16,7 +17,7 @@
   <post-list :posts="searchedPosts" @remove="removePost" v-if="!isLoading" />
   <!-- <custom-loader v-else /> -->
   <!-- <pagination :pages="totalPages" :pageNumber="pageNumber" @changePage="changePage"/> -->
-  <div ref="observer" class="observer"></div>
+  <div v-intersection="loadMorePosts" class="observer"></div>
 </template>
 
 <script lang="ts">
@@ -109,18 +110,6 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-
-    const options = {
-      rootMargin: '0px',
-      threshold: 1.0,
-    };
-    const callback: IntersectionObserverCallback = (entries) => {
-      if (entries[0].isIntersecting && this.pageNumber < this.totalPages) {
-        this.loadMorePosts();
-      }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPosts() {
