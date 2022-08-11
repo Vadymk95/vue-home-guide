@@ -1,9 +1,9 @@
 <template>
   <header class="header">
-    <hgroup class="titles-group">
+    <p class="titles-group">
       <h1 class="title-top">An interesting project about posts</h1>
       <h4 class="title-bottom">created by Vue3</h4>
-    </hgroup>
+    </p>
     <navbar />
   </header>
 </template>
