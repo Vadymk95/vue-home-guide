@@ -13,7 +13,7 @@ export default {};
 <style scoped>
 .nav {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   background-color: #eaeaea;
   padding: 10px;
   box-shadow: 2px 2px 4px gray;
