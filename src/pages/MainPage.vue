@@ -1,11 +1,21 @@
 <template>
-  <div>
-    <h1>Welcome to my Page</h1>
+  <div class="main-page">
+    <tender />
+    <feedbacks />
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import tender from '@/components/Tender.vue';
+import feedbacks from '@/components/Feedbacks.vue';
+export default {
+    components: {
+    tender,
+    feedbacks
+  },
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

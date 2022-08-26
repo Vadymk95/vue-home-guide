@@ -25,6 +25,7 @@ export default { components: { Navbar } };
 
 .title-top {
   text-transform: uppercase;
+  font-size: 50px;
 }
 
 .title-bottom {
