@@ -1,16 +1,16 @@
 <template>
   <div class="app">
-    <post-header />
+    <product-header />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import PostHeader from './components/PostHeader.vue';
-export default { components: { PostHeader } };
+import ProductHeader from './components/ProductHeader.vue';
+export default { components: { ProductHeader } };
 </script>
 
-<style scoped>
+<style>
 * {
   margin: 0;
   padding: 0;
@@ -18,19 +18,21 @@ export default { components: { PostHeader } };
   font-family: sans-serif;
 }
 
-html {
-  height: 100vh;
-}
-
 body {
-  background-color: #eaeaea;
+  background-image: url('./assets/images/bg.jpg');
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #c7b39b;
+  color: #fff;
 }
 
 .app {
-  background-color: #fff;
   height: 100%;
   padding: 20px;
   max-width: 1024px;
   margin: 0 auto;
+  background-color: rgba(0,0,0, 0.4);
 }
 </style>

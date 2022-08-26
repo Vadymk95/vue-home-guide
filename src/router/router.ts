@@ -1,7 +1,7 @@
 import MainPage from '@/pages/MainPage.vue';
-import PostsPage from '@/pages/PostsPage.vue';
+import ProductsPage from '@/pages/ProductsPage.vue';
 import AboutPage from '@/pages/AboutPage.vue';
-import PostPage from '@/pages/PostPage.vue';
+import ProductPage from '@/pages/ProductPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
@@ -10,16 +10,16 @@ const routes = [
     component: MainPage,
   },
   {
-    path: '/posts',
-    component: PostsPage,
+    path: '/products',
+    component: ProductsPage,
   },
   {
     path: '/about',
     component: AboutPage,
   },
   {
-    path: '/posts/:id',
-    component: PostPage,
+    path: '/products/:id',
+    component: ProductPage,
   },
 ];
 

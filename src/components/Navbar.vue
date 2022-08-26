@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <router-link class="nav__link" to="/">Home</router-link>
-    <router-link class="nav__link" to="/posts">Posts</router-link>
+    <router-link class="nav__link" to="/products">Products</router-link>
     <router-link class="nav__link" to="/about">About Us</router-link>
   </nav>
 </template>
@@ -14,15 +14,14 @@ export default {};
 .nav {
   display: flex;
   gap: 30px;
-  background-color: #eaeaea;
   padding: 10px;
-  box-shadow: 2px 2px 4px gray;
+  justify-content: flex-end;
 }
 
 .nav__link {
   text-decoration: none;
   font-weight: 700;
-  color: lightseagreen;
+  color: #fff;
 }
 
 .nav__link:hover {

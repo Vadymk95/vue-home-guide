@@ -6,38 +6,38 @@
     v-focus
   />
   <custom-modal v-model:isShow="modalVisible">
-    <post-form @create="createPost" />
+    <product-form @create="createProduct" />
   </custom-modal>
   <div class="btn-group">
     <custom-button variant="primary" @click="showModal">
-      Create a post
+      Create a product
     </custom-button>
     <custom-select v-model="selectedSort" :options="sortOptions" />
   </div>
-  <post-list :posts="searchedPosts" @remove="removePost" v-if="!isLoading" />
+  <product-list :products="searchedProducts" @remove="removeProduct" v-if="!isLoading" />
   <!-- <custom-loader v-else /> -->
   <!-- <pagination :pages="totalPages" :pageNumber="pageNumber" @changePage="changePage"/> -->
-  <div v-intersection="loadMorePosts" class="observer"></div>
+  <div v-intersection="loadMoreProducts" class="observer"></div>
 </template>
 
 <script lang="ts">
-import PostForm from '@/components/PostForm.vue';
-import PostList from '@/components/PostList.vue';
-import PostHeader from '@/components/PostHeader.vue';
-import { IPost } from '@/models/Post';
+import ProductForm from '@/components/ProductForm.vue';
+import ProductList from '@/components/ProductList.vue';
+import ProductHeader from '@/components/ProductHeader.vue';
+import { IProduct } from '@/models/Product';
 import axios from 'axios';
 // import Pagination from '@/components/Pagination.vue';
 
 export default {
   components: {
-    PostForm,
-    PostList,
+    ProductForm,
+    ProductList,
     // Pagination,
-    PostHeader,
+    ProductHeader,
   },
   data() {
     return {
-      posts: [] as IPost[],
+      posts: [] as IProduct[],
       modalVisible: false,
       isLoading: false,
       selectedSort: '',
@@ -52,17 +52,17 @@ export default {
     };
   },
   methods: {
-    createPost(post: IPost) {
-      this.posts.push(post);
+    createProduct(product: IProduct) {
+      this.posts.push(product);
       this.modalVisible = false;
     },
-    removePost(id: number) {
-      this.posts = this.posts.filter((post: IPost) => post.id !== id);
+    removeProduct(id: number) {
+      this.posts = this.posts.filter((product: IProduct) => product.id !== id);
     },
     showModal() {
       this.modalVisible = true;
     },
-    async fetchPosts() {
+    async fetchProducts() {
       try {
         this.isLoading = true;
         const response = await axios(
@@ -84,7 +84,7 @@ export default {
         this.isLoading = false;
       }
     },
-    async loadMorePosts() {
+    async loadMoreProducts() {
       try {
         this.pageNumber += 1;
         const response = await axios(
@@ -109,29 +109,29 @@ export default {
     // }
   },
   mounted() {
-    this.fetchPosts();
+    this.fetchProducts();
   },
   computed: {
-    sortedPosts() {
+    sortedProducts() {
       return [...this.posts].sort(
         (
-          post1: { title: string; body: string },
-          post2: { title: string; body: string }
+          prod1: { title: string; body: string },
+          prod2: { title: string; body: string }
         ) =>
-          post1[this.selectedSort as keyof typeof post1]?.localeCompare(
-            post2[this.selectedSort as keyof typeof post2]
+          prod1[this.selectedSort as keyof typeof prod1]?.localeCompare(
+            prod2[this.selectedSort as keyof typeof prod2]
           )
       );
     },
-    searchedPosts() {
-      return this.sortedPosts.filter((post: IPost) =>
-        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+    searchedProducts() {
+      return this.sortedProducts.filter((product: IProduct) =>
+        product.title.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
   },
   watch: {
     // pageNumber() {
-    //   this.fetchPosts();
+    //   this.fetchProducts();
     // }
   },
 };
@@ -147,7 +147,7 @@ export default {
 }
 
 .search-input {
-  width: calc(100% - 44px);
+  width: 100%;
   margin-bottom: 10px;
 }
 </style>

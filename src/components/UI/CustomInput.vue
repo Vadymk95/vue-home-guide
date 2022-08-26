@@ -18,10 +18,13 @@ export default {
 
 <style scoped>
 .input {
+  background-color: rgba(0,0,0, 0.3);
   outline: none;
   padding: 10px 20px;
   border-radius: 8px;
   border: 2px solid lightskyblue;
+  color: #fff;
+  width: 100%;
 }
 
 .input:focus {
@@ -32,5 +35,9 @@ export default {
   box-shadow: 0 0 5px #707070;
   border-color: darkcyan;
   transition: all 0.3s;
+}
+
+.input::placeholder {
+  color: grey;
 }
 </style>

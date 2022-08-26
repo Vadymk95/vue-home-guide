@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <p class="titles-group">
-      <h1 class="title-top">An interesting project about posts</h1>
-      <h4 class="title-bottom">created by Vue3</h4>
+      <h1 class="title-top">RION-T</h1>
+      <h4 class="title-bottom">construction co.</h4>
     </p>
     <navbar />
   </header>
@@ -18,7 +18,7 @@ export default { components: { Navbar } };
   margin-bottom: 15px;
 }
 .titles-group {
-  color: #707070;
+  color: #eaeaea;
   margin-bottom: 40px;
   text-align: center;
 }
@@ -28,6 +28,6 @@ export default { components: { Navbar } };
 }
 
 .title-bottom {
-  color: #303030;
+  color: #fff;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <form class="form" @submit.prevent>
-    <h3 class="form__title">Create a post</h3>
+    <h3 class="form__title">Add New Product</h3>
     <fieldset class="form__wrap">
       <div>
         <custom-input
           class="form__input input"
           type="text"
-          placeholder="Add post title"
+          placeholder="Add product name"
           v-model="post.title"
           v-focus
         />
@@ -15,11 +15,11 @@
         <custom-input
           class="form__input"
           type="text"
-          placeholder="Add post description"
+          placeholder="Add product description"
           v-model="post.body"
         />
       </div>
-      <custom-button @click="createPost" variant="primary">Add Post</custom-button>
+      <custom-button class="form__btn" @click="createProduct" variant="primary">Add Product</custom-button>
     </fieldset>
   </form>
 </template>
@@ -35,7 +35,7 @@ export default {
     };
   },
   methods: {
-    createPost() {
+    createProduct() {
       if (!this.post.title || !this.post.body) return;
       this.post.id = Date.now();
       this.$emit('create', this.post);
@@ -56,6 +56,14 @@ export default {
   align-items: center;
   gap: 20px;
   border: none;
+}
+
+.form__wrap > div {
+  width: 100%;
+}
+
+.form__btn {
+  margin-top: 50px;
 }
 
 .form__title {

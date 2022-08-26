@@ -1,28 +1,28 @@
 <template>
-  <div class="post-list">
-    <div v-if="posts.length > 0" class="post-list__content">
-      <h3 class="post-list__title">List of Posts</h3>
+  <div class="product-list">
+    <div v-if="products.length > 0" class="product-list__content">
+      <h2 class="product-list__title">List of Products</h2>
       <transition-group name="list" tag="div">
-        <post
-          v-for="post in posts"
-          :post="post"
-          :key="post.id"
-          @remove="$emit('remove', post.id)"
+        <product
+          v-for="product in products"
+          :product="product"
+          :key="product.id"
+          @remove="$emit('remove', product.id)"
         />
       </transition-group>
     </div>
-    <h2 v-else class="post-list__empty-title">The list of posts is empty</h2>
+    <h2 v-else class="product-list__empty-title">The list of products is empty</h2>
   </div>
 </template>
 
 <script lang="ts">
-import Post from './Post.vue';
+import product from './Product.vue';
 export default {
   components: {
-    Post,
+    product,
   },
   props: {
-    posts: {
+    products: {
       type: Array,
       required: true,
     },
@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style scoped>
-.post-list__title {
+.product-list__title {
   margin-bottom: 10px;
 }
 
-.post-list__empty-title {
+.product-list__empty-title {
   text-align: center;
   text-transform: uppercase;
   font-weight: 700;

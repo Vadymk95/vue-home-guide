@@ -29,9 +29,9 @@ export default {
 .modal__content {
   padding: 16px;
   margin: auto;
-  background-color: #fff;
+  background-color: teal;
   border-radius: 8px;
-  min-width: 300px;
+  min-width: 700px;
   min-height: 300px;
 }
 </style>
