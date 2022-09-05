@@ -17,6 +17,7 @@
       :model-value="selectedSort"
       @update:model-value="setSelectedSort"
       :options="sortOptions"
+      :nameOption="nameOption"
     />
   </div>
   <product-list
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       modalVisible: false,
+      nameOption: 'Filter By'
     };
   },
   methods: {

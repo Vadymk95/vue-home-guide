@@ -1,6 +1,6 @@
 <template>
   <select class="custom-select" v-model="modelValue" @change="changeOption">
-    <option disabled value="">Filter by</option>
+    <option disabled value="">{{nameOption}}</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.name }}
     </option>
@@ -11,6 +11,9 @@
 export default {
   name: 'custom-select',
   props: {
+    nameOption: {
+      type: String,
+    },
     modelValue: {
       type: String,
     },
