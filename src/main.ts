@@ -6,6 +6,7 @@ import directives from '@/directives';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faList, faBriefcase, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import store from '@/store';
 
 const app = createApp(App);
 
@@ -19,4 +20,8 @@ directives.forEach((directive) => {
   app.directive(directive.name, directive);
 });
 
-app.component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#app');
+app
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .use(store)
+    .use(router)
+    .mount('#app');
