@@ -1,10 +1,10 @@
-import { IProduct } from '@/models/Product';
-import { IState } from '@/models/State';
-import axios from 'axios';
 import { Commit } from 'vuex';
+import axios from 'axios';
+import { IProduct } from '@/models/Product';
+import { IProductState } from '@/models/State';
 
-type ActionFetchOptionsType = {
-  state: IState;
+type ActionType = {
+  state: IProductState;
   commit: Commit;
 };
 
@@ -23,7 +23,7 @@ export const productModule = {
     totalPages: 0,
   }),
   getters: {
-    sortedProducts(state: IState) {
+    sortedProducts(state: IProductState) {
       return [...state.products].sort(
         (
           prod1: { title: string; body: string },
@@ -34,34 +34,34 @@ export const productModule = {
           )
       );
     },
-    searchedProducts(state: IState, getters: any) {
+    searchedProducts(state: IProductState, getters: any) {
       return getters.sortedProducts.filter((product: IProduct) =>
         product.title.toLowerCase().includes(state.searchQuery.toLowerCase())
       );
     },
   },
   mutations: {
-    setProducts(state: IState, posts: IProduct[]) {
+    setProducts(state: IProductState, posts: IProduct[]) {
       state.products = posts;
     },
-    setLoading(state: IState, bool: boolean) {
+    setLoading(state: IProductState, bool: boolean) {
       state.isLoading = bool;
     },
-    setPage(state: IState, page: number) {
+    setPage(state: IProductState, page: number) {
       state.pageNumber = page;
     },
-    setSelectedSort(state: IState, selectedSort: string) {
+    setSelectedSort(state: IProductState, selectedSort: string) {
       state.selectedSort = selectedSort;
     },
-    setTotalPages(state: IState, totalPages: number) {
+    setTotalPages(state: IProductState, totalPages: number) {
       state.totalPages = totalPages;
     },
-    setSearchQuery(state: IState, searchQuery: string) {
+    setSearchQuery(state: IProductState, searchQuery: string) {
       state.searchQuery = searchQuery;
     },
   },
   actions: {
-    async fetchProducts({ state, commit }: ActionFetchOptionsType) {
+    async fetchProducts({ state, commit }: ActionType) {
       try {
         commit('setLoading', true);
         const response = await axios(
@@ -84,7 +84,7 @@ export const productModule = {
         commit('setLoading', false);
       }
     },
-    async loadMoreProducts({ state, commit }: ActionFetchOptionsType) {
+    async loadMoreProducts({ state, commit }: ActionType) {
       try {
         commit('setPage', (state.pageNumber += 1));
         const response = await axios(

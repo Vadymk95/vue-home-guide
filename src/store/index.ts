@@ -1,4 +1,5 @@
-import { productModule } from '@/store/productModule';
+import { productModule } from '@/store/moduls/ProductModule';
+import { authModule } from '@/store/moduls/AuthModule';
 import { createStore } from 'vuex';
 
 export default createStore({
@@ -19,5 +20,6 @@ export default createStore({
   actions: {},
   modules: {
     product: productModule,
+    auth: authModule,
   },
 });

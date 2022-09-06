@@ -5,7 +5,7 @@ type SortOptionType = {
   name: string;
 };
 
-export interface IState {
+export interface IProductState {
   products: IProduct[];
   isLoading: boolean;
   selectedSort: string;
@@ -14,4 +14,11 @@ export interface IState {
   pageNumber: number;
   limit: number;
   totalPages: number;
+}
+
+export interface IAuthState {
+  credentials: {
+    token: null | string,
+    userRole: null | string,
+  },
 }

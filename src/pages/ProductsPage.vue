@@ -34,7 +34,7 @@ import ProductList from '@/components/ProductList.vue';
 import ProductHeader from '@/components/ProductHeader.vue';
 import { IProduct } from '@/models/Product';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
-import { IState } from '../models/State';
+import { IProductState } from '../models/State';
 
 export default {
   components: {
@@ -76,16 +76,16 @@ export default {
   },
   computed: {
     ...mapState({
-      products: function (state: { product: IState }) {
+      products: function (state: { product: IProductState }) {
         return state.product.products;
       },
-      isLoading: (state: { product: IState }) => state.product.isLoading,
-      selectedSort: (state: { product: IState }) => state.product.selectedSort,
-      searchQuery: (state: { product: IState }) => state.product.searchQuery,
-      pageNumber: (state: { product: IState }) => state.product.pageNumber,
-      limit: (state: { product: IState }) => state.product.limit,
-      totalPages: (state: { product: IState }) => state.product.totalPages,
-      sortOptions: (state: { product: IState }) => state.product.sortOptions,
+      isLoading: (state: { product: IProductState }) => state.product.isLoading,
+      selectedSort: (state: { product: IProductState }) => state.product.selectedSort,
+      searchQuery: (state: { product: IProductState }) => state.product.searchQuery,
+      pageNumber: (state: { product: IProductState }) => state.product.pageNumber,
+      limit: (state: { product: IProductState }) => state.product.limit,
+      totalPages: (state: { product: IProductState }) => state.product.totalPages,
+      sortOptions: (state: { product: IProductState }) => state.product.sortOptions,
     }),
     ...mapGetters({
       sortedProducts: 'product/sortedProducts',
