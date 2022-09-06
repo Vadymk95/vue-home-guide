@@ -7,7 +7,7 @@
           class="login__input input"
           type="text"
           placeholder="Login..."
-          v-model="username"
+          v-model="login"
           v-focus
         />
       </div>
@@ -19,12 +19,13 @@
           v-model="password"
         />
       </div>
-      <custom-button class="login__btn" @click="createProduct" variant="primary"
+      <custom-button class="login__btn" @click="onLogin" variant="primary"
         >Sign In</custom-button
       >
     </fieldset>
     <p class="login__sign">
-      or Sign Up <router-link class="login__link" to="/auth/signup">here</router-link>
+      or Sign Up
+      <router-link class="login__link" to="/auth/signup">here</router-link>
     </p>
   </form>
 </template>
@@ -34,11 +35,22 @@ export default {
   name: 'SignIn',
   data() {
     return {
-      username: '',
+      login: '',
       password: '',
     };
   },
-  methods: {},
+  methods: {
+    onLogin() {
+      this.$store
+        .dispatch('authModule/onLogin', {
+          login: this.login,
+          password: this.password,
+        })
+        .then(() => {
+          this.$router.push({ name: '/products' });
+        });
+    },
+  },
 };
 </script>
 
@@ -70,7 +82,7 @@ export default {
 
 .login__sign {
   display: inline-block;
-  background-color: rgba(255,255,255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   padding: 8px;
   border-radius: 8px;
 }
